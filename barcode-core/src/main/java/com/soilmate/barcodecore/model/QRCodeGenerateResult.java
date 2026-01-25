@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 
 @Data
 @Builder
-public class QRCodeGenerateResponse {
+public class QRCodeGenerateResult {
 
     private BufferedImage image;
     private byte[] bytes;
