@@ -10,6 +10,8 @@ import com.soilmate.barcodecore.config.QRCodeProperties;
 import com.soilmate.barcodecore.generator.BarcodeGenerator;
 import com.soilmate.barcodecore.model.QRCodeGenerateRequest;
 import com.soilmate.barcodecore.model.QRCodeGenerateResult;
+import com.soilmate.common.enums.ErrorCode;
+import com.soilmate.common.exception.BarcodeException;
 import org.springframework.stereotype.Component;
 
 import javax.imageio.ImageIO;
@@ -31,6 +33,10 @@ public class QRCodeGeneratorImpl implements BarcodeGenerator {
 
     @Override
     public QRCodeGenerateResult generate(QRCodeGenerateRequest request) {
+        if (request.getContent() == null || request.getContent().isBlank()) {
+            throw new BarcodeException(ErrorCode.BARCODE_CONTENT_EMPTY);
+        }
+
         try {
             int width = getOrDefault(request.getWidth(), properties.getWidth());
             int height = getOrDefault(request.getHeight(), properties.getHeight());
@@ -45,7 +51,7 @@ public class QRCodeGeneratorImpl implements BarcodeGenerator {
             return buildResult(image, request.getContent());
 
         } catch (WriterException e) {
-            throw new RuntimeException("生成二维码失败: " + e.getMessage(), e);
+            throw new BarcodeException(ErrorCode.BARCODE_GENERATE_FAILED, e);
         }
     }
 
@@ -85,7 +91,7 @@ public class QRCodeGeneratorImpl implements BarcodeGenerator {
                     .content(content)
                     .build();
         } catch (IOException e) {
-            throw new RuntimeException("图片转换失败", e);
+            throw new BarcodeException(ErrorCode.BARCODE_IMAGE_CONVERT_FAILED, e);
         }
     }
 
