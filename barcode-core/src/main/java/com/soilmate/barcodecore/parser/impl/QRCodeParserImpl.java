@@ -61,6 +61,9 @@ public class QRCodeParserImpl implements BarcodeParser {
 
         try {
             BufferedImage image = ImageIO.read(inputStream);
+            if (image == null) {
+                throw new BarcodeException(ErrorCode.BARCODE_IMAGE_FORMAT_INVALID);
+            }
             return parse(image);
         } catch (IOException e) {
             throw new BarcodeException(ErrorCode.BARCODE_IMAGE_READ_FAILED, e);

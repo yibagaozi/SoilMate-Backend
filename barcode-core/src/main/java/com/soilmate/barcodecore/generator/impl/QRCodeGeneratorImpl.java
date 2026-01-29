@@ -40,6 +40,10 @@ public class QRCodeGeneratorImpl implements BarcodeGenerator {
         try {
             int width = getOrDefault(request.getWidth(), properties.getWidth());
             int height = getOrDefault(request.getHeight(), properties.getHeight());
+            
+            if (width <= 0 || height <= 0) {
+                throw new BarcodeException(ErrorCode.PARAM_ERROR);
+            }
 
             Map<EncodeHintType, Object> hints = buildHints(request);
 

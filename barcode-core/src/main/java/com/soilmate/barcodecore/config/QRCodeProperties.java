@@ -2,13 +2,11 @@ package com.soilmate.barcodecore.config;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 @Data
-@Configuration
+@Component
 @ConfigurationProperties(prefix="soilmate.qrcode")
-@ComponentScan("com.soilmate.barcodecore")
 public class QRCodeProperties {
 
     private int width = 300;
