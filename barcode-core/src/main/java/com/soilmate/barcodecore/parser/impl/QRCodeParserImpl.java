@@ -4,7 +4,7 @@ import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
 import com.soilmate.barcodecore.config.QRCodeProperties;
-import com.soilmate.barcodecore.model.QRCodeDecodeResult;
+import com.soilmate.barcodecore.model.QRCodeParseResult;
 import com.soilmate.barcodecore.parser.BarcodeParser;
 import com.soilmate.common.enums.ErrorCode;
 import com.soilmate.common.exception.BarcodeException;
@@ -29,7 +29,7 @@ public class QRCodeParserImpl implements BarcodeParser {
     }
 
     @Override
-    public QRCodeDecodeResult parse(BufferedImage image) {
+    public QRCodeParseResult parse(BufferedImage image) {
         if (image == null) {
             throw new BarcodeException(ErrorCode.BARCODE_IMAGE_EMPTY);
         }
@@ -43,7 +43,7 @@ public class QRCodeParserImpl implements BarcodeParser {
             Map<DecodeHintType, Object> hints = buildHints();
             Result result = new MultiFormatReader().decode(bitmap, hints);
 
-            return QRCodeDecodeResult.builder()
+            return QRCodeParseResult.builder()
                     .content(result.getText())
                     .costTime(System.currentTimeMillis() - startTime)
                     .build();
@@ -54,7 +54,7 @@ public class QRCodeParserImpl implements BarcodeParser {
     }
 
     @Override
-    public QRCodeDecodeResult parse(InputStream inputStream) {
+    public QRCodeParseResult parse(InputStream inputStream) {
         if (inputStream == null) {
             throw new BarcodeException(ErrorCode.BARCODE_IMAGE_EMPTY);
         }
@@ -68,7 +68,7 @@ public class QRCodeParserImpl implements BarcodeParser {
     }
 
     @Override
-    public QRCodeDecodeResult parse(byte[] bytes) {
+    public QRCodeParseResult parse(byte[] bytes) {
         if (bytes == null || bytes.length == 0) {
             throw new BarcodeException(ErrorCode.BARCODE_IMAGE_EMPTY);
         }
@@ -77,7 +77,7 @@ public class QRCodeParserImpl implements BarcodeParser {
     }
 
     @Override
-    public QRCodeDecodeResult parseBase64(String base64) {
+    public QRCodeParseResult parseBase64(String base64) {
         if (base64 == null || base64.isBlank()) {
             throw new BarcodeException(ErrorCode.BARCODE_BASE64_EMPTY);
         }

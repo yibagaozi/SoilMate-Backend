@@ -1,18 +1,18 @@
 package com.soilmate.barcodecore.parser;
 
-import com.soilmate.barcodecore.model.QRCodeDecodeResult;
+import com.soilmate.barcodecore.model.QRCodeParseResult;
 
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 
 public interface BarcodeParser {
 
-    QRCodeDecodeResult parse(BufferedImage image);
+    QRCodeParseResult parse(BufferedImage image);
 
-    QRCodeDecodeResult parse(InputStream inputStream);
+    QRCodeParseResult parse(InputStream inputStream);
 
-    QRCodeDecodeResult parse(byte[] bytes);
+    QRCodeParseResult parse(byte[] bytes);
 
-    QRCodeDecodeResult parseBase64(String base64);
+    QRCodeParseResult parseBase64(String base64);
 
 }
