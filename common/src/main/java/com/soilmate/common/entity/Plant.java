@@ -1,10 +1,7 @@
 package com.soilmate.common.entity;
 
 import com.soilmate.common.enums.SunlightRequirement;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
