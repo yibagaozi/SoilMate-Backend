@@ -1,7 +1,19 @@
 package com.soilmate.common.security.interceptor;
 
+import com.soilmate.common.enums.ErrorCode;
+import com.soilmate.common.exception.AccessDeniedException;
+import com.soilmate.common.exception.TokenException;
+import com.soilmate.common.security.annotation.RequireAdmin;
+import com.soilmate.common.security.annotation.RequireAuth;
+import com.soilmate.common.security.config.JwtProperties;
+import com.soilmate.common.security.context.UserContext;
+import com.soilmate.common.security.context.UserContextHolder;
 import com.soilmate.common.security.util.JwtUtil;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.jspecify.annotations.NonNull;
 import org.springframework.stereotype.Component;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
@@ -19,5 +31,62 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         this.jwtUtil = jwtUtil;
     }
 
-    
+    @Override
+    public boolean preHandle(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+                             @NonNull Object handler) throws Exception {
+
+        if (!(handler instanceof HandlerMethod handlerMethod)) {
+            return true;
+        }
+
+        boolean requiresAuth = isAuthRequired(handlerMethod);
+        boolean requiresAdmin = isAdminRequired(handlerMethod);
+
+        String token = extractToken(request);
+
+        if (requiresAuth || requiresAdmin) {
+            if (token == null) {
+                throw new TokenException(ErrorCode.TOKEN_MISSING);
+            }
+
+            UserContext userContext = jwtUtil.validateAccessToken(token);
+            UserContextHolder.setContext(userContext);
+
+            if (requiresAdmin && !userContext.isAdmin()) {
+                throw new AccessDeniedException(ErrorCode.ACCESS_DENIED);
+            }
+        } else {
+            if (token != null) {
+                try {
+                    UserContext userContext = jwtUtil.validateAccessToken(token);
+                    UserContextHolder.setContext(userContext);
+                } catch (TokenException e) {
+                    // Ignore invalid token for public endpoints
+                }
+            }
+        }
+
+        return true;
+    }
+
+    private String extractToken(HttpServletRequest request) {
+        String header = request.getHeader(JwtProperties.HEADER_NAME);
+
+        if (header != null && header.startsWith(JwtProperties.TOKEN_PREFIX)) {
+            return header.substring(JwtProperties.TOKEN_PREFIX.length());
+        }
+
+        return null;
+    }
+
+    private boolean isAuthRequired(HandlerMethod handlerMethod) {
+        return handlerMethod.getMethodAnnotation(RequireAuth.class) != null
+                || handlerMethod.getBeanType().getAnnotation(RequireAuth.class) != null;
+    }
+
+    private boolean isAdminRequired(HandlerMethod handlerMethod) {
+        return handlerMethod.getMethodAnnotation(RequireAdmin.class) != null
+                || handlerMethod.getBeanType().getAnnotation(RequireAdmin.class) != null;
+    }
+
 }
