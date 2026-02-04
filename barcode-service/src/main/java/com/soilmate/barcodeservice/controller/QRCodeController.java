@@ -2,7 +2,10 @@ package com.soilmate.barcodeservice.controller;
 
 import com.soilmate.barcodecore.generator.BarcodeGenerator;
 import com.soilmate.barcodecore.model.QRCodeGenerateResult;
+import com.soilmate.barcodecore.model.QRCodeParseResult;
 import com.soilmate.barcodecore.parser.BarcodeParser;
+import com.soilmate.barcodeservice.dto.DecodeRequest;
+import com.soilmate.barcodeservice.dto.DecodeResponse;
 import com.soilmate.barcodeservice.dto.EncodeRequest;
 import com.soilmate.barcodeservice.dto.EncodeResponse;
 import com.soilmate.common.response.ApiResponse;
@@ -41,7 +44,7 @@ public class QRCodeController {
 
     @PostMapping("/encode")
     public ApiResponse<EncodeResponse> encode(@RequestBody EncodeRequest request) {
-        
+
         QRCodeGenerateResult result;
 
         if (request.getWidth() != null && request.getHeight() != null) {
@@ -55,6 +58,17 @@ public class QRCodeController {
                 .base64Image(result.getBase64())
                 .width(result.getImage().getWidth())
                 .height(result.getImage().getHeight())
+                .build();
+
+        return ApiResponse.success(response);
+    }
+
+    @PostMapping("/decode")
+    public ApiResponse<DecodeResponse> decode(@RequestBody DecodeRequest request) {
+        QRCodeParseResult result = barcodeParser.parseBase64(request.getBase64Image());
+
+        DecodeResponse response = DecodeResponse.builder()
+                .content(result.getContent())
                 .build();
 
         return ApiResponse.success(response);
