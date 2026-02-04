@@ -42,7 +42,8 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         boolean requiresAuth = isAuthRequired(handlerMethod);
         boolean requiresAdmin = isAdminRequired(handlerMethod);
 
-        String token = extractToken(request);
+        String header = request.getHeader(JwtProperties.HEADER_NAME);
+        String token = jwtUtil.extractTokenFromHeader(header);
 
         if (requiresAuth || requiresAdmin) {
             if (token == null) {
@@ -60,8 +61,7 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
                 try {
                     UserContext userContext = jwtUtil.validateAccessToken(token);
                     UserContextHolder.setContext(userContext);
-                } catch (TokenException e) {
-                    // Ignore invalid token for public endpoints
+                } catch (TokenException ignored) {
                 }
             }
         }
@@ -69,14 +69,10 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
         return true;
     }
 
-    private String extractToken(HttpServletRequest request) {
-        String header = request.getHeader(JwtProperties.HEADER_NAME);
-
-        if (header != null && header.startsWith(JwtProperties.TOKEN_PREFIX)) {
-            return header.substring(JwtProperties.TOKEN_PREFIX.length());
-        }
-
-        return null;
+    @Override
+    public void afterCompletion(@NonNull HttpServletRequest request, @NonNull HttpServletResponse response,
+                                @NonNull Object handler, Exception ex) throws Exception {
+        UserContextHolder.clear();
     }
 
     private boolean isAuthRequired(HandlerMethod handlerMethod) {
