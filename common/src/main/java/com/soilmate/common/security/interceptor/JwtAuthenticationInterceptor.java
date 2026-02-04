@@ -50,11 +50,16 @@ public class JwtAuthenticationInterceptor implements HandlerInterceptor {
                 throw new TokenException(ErrorCode.TOKEN_MISSING);
             }
 
-            UserContext userContext = jwtUtil.validateAccessToken(token);
-            UserContextHolder.setContext(userContext);
+            try {
+                UserContext userContext = jwtUtil.validateAccessToken(token);
+                UserContextHolder.setContext(userContext);
 
-            if (requiresAdmin && !userContext.isAdmin()) {
-                throw new AccessDeniedException(ErrorCode.ACCESS_DENIED);
+                if (requiresAdmin && !userContext.isAdmin()) {
+                    throw new AccessDeniedException(ErrorCode.ACCESS_DENIED);
+                }
+            } catch (AccessDeniedException | TokenException e) {
+                UserContextHolder.clear();
+                throw e;
             }
         } else {
             if (token != null) {
