@@ -28,6 +28,12 @@ public class GlobalExceptionHandler {
         return ApiResponse.error(e.getErrorCode());
     }
 
+    @ExceptionHandler(BarcodeException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResponse<?> handle(BarcodeException e){
+        return ApiResponse.error(e.getErrorCode());
+    }
+      
     @ExceptionHandler(TokenException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     public ApiResponse<?> handle(TokenException e) {
