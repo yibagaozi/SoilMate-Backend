@@ -1,4 +1,4 @@
-package com.soilmate.common.entity;
+package com.soilmate.webservice.entity;
 
 import com.soilmate.common.enums.CareType;
 import lombok.*;
