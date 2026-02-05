@@ -1,9 +1,6 @@
 package com.soilmate.common.handler;
 
-import com.soilmate.common.exception.AuthenticationException;
-import com.soilmate.common.exception.BarcodeException;
-import com.soilmate.common.exception.BusinessException;
-import com.soilmate.common.exception.ResourceNotFoundException;
+import com.soilmate.common.exception.*;
 import com.soilmate.common.response.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -34,6 +31,18 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(BarcodeException.class)
     @ResponseStatus(HttpStatus.FORBIDDEN)
     public ApiResponse<?> handle(BarcodeException e){
+        return ApiResponse.error(e.getErrorCode());
+    }
+      
+    @ExceptionHandler(TokenException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    public ApiResponse<?> handle(TokenException e) {
+        return ApiResponse.error(e.getErrorCode());
+    }
+
+    @ExceptionHandler(AccessDeniedException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResponse<?> handle(AccessDeniedException e) {
         return ApiResponse.error(e.getErrorCode());
     }
 
