@@ -1,5 +1,7 @@
 package com.soilmate.webservice.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
+import com.soilmate.common.enums.UserRole;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -16,11 +18,13 @@ import java.time.LocalTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("user")
 public class User {
 
     /**
      * The unique identifier for this user.
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -56,13 +60,18 @@ public class User {
     @Builder.Default
     private LocalTime reminderTime = LocalTime.of(9, 0);
 
+    @Builder.Default
+    private UserRole role = UserRole.USER;
+
     /**
      * The timestamp when this user account was created.
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
     /**
      * The timestamp when this user account was last updated.
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 }

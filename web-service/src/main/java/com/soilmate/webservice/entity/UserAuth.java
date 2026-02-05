@@ -1,5 +1,6 @@
 package com.soilmate.webservice.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.soilmate.common.enums.AuthProvider;
 import lombok.*;
 
@@ -15,11 +16,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("user_auth")
 public class UserAuth {
 
     /**
      * The unique identifier for this authentication record.
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -71,10 +74,12 @@ public class UserAuth {
     /**
      * The timestamp when this authentication record was created.
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
     /**
      * The timestamp when this authentication record was last updated.
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 }
