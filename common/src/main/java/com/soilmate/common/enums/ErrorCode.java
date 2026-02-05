@@ -44,7 +44,16 @@ public enum ErrorCode {
     BARCODE_IMAGE_FORMAT_INVALID("BARCODE_006", "Invalid image format"),
     BARCODE_PARSE_FAILED("BARCODE_007", "No QR code detected"),
     BARCODE_BASE64_EMPTY("BARCODE_008", "Base64 string cannot be empty"),
-    BARCODE_BASE64_INVALID("BARCODE_009", "Invalid Base64 encoding");
+    BARCODE_BASE64_INVALID("BARCODE_009", "Invalid Base64 encoding"),
+
+    // User
+    USER_NOT_FOUND("USER_001", "User not found"),
+    USER_EMAIL_EXISTS("USER_002", "Email already registered"),
+    USER_EMAIL_INVALID("USER_003", "Invalid email format"),
+    USER_PASSWORD_WEAK("USER_004", "Password must be at least 8 characters"),
+    USER_DISPLAY_NAME_REQUIRED("USER_005", "Display name is required"),
+    USER_AUTH_NOT_FOUND("USER_006", "Authentication method not found"),
+    USER_ALREADY_LINKED("USER_007", "This authentication method is already linked");
 
     private final String code;
     private final String message;

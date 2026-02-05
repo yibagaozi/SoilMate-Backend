@@ -45,5 +45,11 @@ public class GlobalExceptionHandler {
     public ApiResponse<?> handle(AccessDeniedException e) {
         return ApiResponse.error(e.getErrorCode());
     }
+    
+    @ExceptionHandler(UserException.class)
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<?> handle(UserException e) {
+        return ApiResponse.error(e.getErrorCode());
+    }
 
 }
