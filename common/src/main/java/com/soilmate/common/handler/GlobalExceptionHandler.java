@@ -1,6 +1,7 @@
 package com.soilmate.common.handler;
 
 import com.soilmate.common.exception.AuthenticationException;
+import com.soilmate.common.exception.BarcodeException;
 import com.soilmate.common.exception.BusinessException;
 import com.soilmate.common.exception.ResourceNotFoundException;
 import com.soilmate.common.response.ApiResponse;
@@ -27,6 +28,12 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(ResourceNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<?> handle(ResourceNotFoundException e){
+        return ApiResponse.error(e.getErrorCode());
+    }
+
+    @ExceptionHandler(BarcodeException.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    public ApiResponse<?> handle(BarcodeException e){
         return ApiResponse.error(e.getErrorCode());
     }
 

@@ -9,6 +9,7 @@ import com.soilmate.barcodeservice.dto.DecodeResponse;
 import com.soilmate.barcodeservice.dto.EncodeRequest;
 import com.soilmate.barcodeservice.dto.EncodeResponse;
 import com.soilmate.common.response.ApiResponse;
+import lombok.NonNull;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class QRCodeController {
     }
 
     @GetMapping("/image")
-    public ResponseEntity<byte[]> getImage(@RequestParam String content,
+    public ResponseEntity<byte[]> getImage(@NonNull @RequestParam String content,
                                            @RequestParam(required = false, defaultValue = "300") Integer width,
                                            @RequestParam(required = false, defaultValue = "300") Integer height) {
 
