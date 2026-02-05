@@ -1,5 +1,6 @@
 package com.soilmate.common.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.soilmate.common.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,6 +18,7 @@ public enum CareType {
     WATER("WATER"),
     FEED("FEED");
 
+    @EnumValue
     private final String code;
 
     public static CareType fromCode(String code) {

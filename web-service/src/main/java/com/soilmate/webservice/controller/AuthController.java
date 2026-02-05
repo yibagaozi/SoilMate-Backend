@@ -1,6 +1,9 @@
 package com.soilmate.webservice.controller;
 
 import com.soilmate.common.response.ApiResponse;
+import com.soilmate.common.security.dto.TokenResponse;
+import com.soilmate.webservice.dto.request.LoginRequest;
+import com.soilmate.webservice.dto.request.RefreshTokenRequest;
 import com.soilmate.webservice.dto.request.RegisterRequest;
 import com.soilmate.webservice.dto.response.AuthResponse;
 import com.soilmate.webservice.service.AuthService;
@@ -42,6 +45,34 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(ApiResponse.created(response, "Registration successful"));
+    }
+
+    /**
+     * Login with email and password.
+     * POST /auth/login
+     */
+    @PostMapping("/login")
+    public ResponseEntity<ApiResponse<AuthResponse>> login(
+            @Valid @RequestBody LoginRequest request) {
+        log.info("Login request received for email: {}", request.getEmail());
+
+        AuthResponse response = authService.login(request);
+
+        return ResponseEntity.ok(ApiResponse.success(response, "Login successful"));
+    }
+
+    /**
+     * Refresh access token using refresh token.
+     * POST /auth/refresh
+     */
+    @PostMapping("/refresh")
+    public ResponseEntity<ApiResponse<TokenResponse>> refreshToken(
+            @Valid @RequestBody RefreshTokenRequest request) {
+        log.info("Token refresh request received");
+
+        TokenResponse response = authService.refreshToken(request);
+
+        return ResponseEntity.ok(ApiResponse.success(response, "Token refreshed"));
     }
 
 }

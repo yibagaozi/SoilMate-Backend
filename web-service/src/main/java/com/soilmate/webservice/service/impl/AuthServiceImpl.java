@@ -4,7 +4,9 @@ import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.soilmate.common.enums.AuthProvider;
 import com.soilmate.common.enums.ErrorCode;
 import com.soilmate.common.enums.UserRole;
+import com.soilmate.common.exception.AuthenticationException;
 import com.soilmate.common.exception.UserException;
+import com.soilmate.common.security.context.UserContext;
 import com.soilmate.common.security.dto.TokenResponse;
 import com.soilmate.common.security.util.JwtUtil;
 import com.soilmate.webservice.dto.request.LoginRequest;
@@ -85,7 +87,42 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public AuthResponse login(LoginRequest request) {
-        return null;
+        log.info("User login attempt with email: {}", request.getEmail());
+
+        // Find user auth by email and provider
+        UserAuth userAuth = userAuthMapper.selectOne(
+                new LambdaQueryWrapper<UserAuth>()
+                        .eq(UserAuth::getProviderEmail, request.getEmail())
+                        .eq(UserAuth::getAuthProvider, AuthProvider.EMAIL)
+        );
+
+        if (userAuth == null) {
+            log.warn("Login failed: user not found - {}", request.getEmail());
+            throw new AuthenticationException(ErrorCode.WRONG_CREDENTIALS);
+        }
+
+        // Verify password
+        if (!passwordEncoder.matches(request.getPassword(), userAuth.getPasswordHash())) {
+            log.warn("Login failed: wrong password for user - {}", request.getEmail());
+            throw new AuthenticationException(ErrorCode.WRONG_CREDENTIALS);
+        }
+
+        // Get user entity
+        User user = userMapper.selectById(userAuth.getUserId());
+        if (user == null) {
+            log.error("User entity not found for user auth id: {}", userAuth.getId());
+            throw new UserException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        // Generate tokens
+        TokenResponse tokens = generateTokens(user);
+
+        log.info("User logged in successfully: {}", user.getId());
+
+        return AuthResponse.builder()
+                .user(UserResponse.fromEntity(user))
+                .tokens(tokens)
+                .build();
     }
 
     @Override
@@ -96,7 +133,24 @@ public class AuthServiceImpl implements AuthService {
 
     @Override
     public TokenResponse refreshToken(RefreshTokenRequest request) {
-        return null;
+        log.info("Refreshing token");
+
+        // Validate refresh token
+        UserContext userContext = jwtUtil.validateRefreshToken(request.getRefreshToken());
+
+        // Get user to ensure they still exist
+        User user = userMapper.selectById(userContext.getUserId());
+        if (user == null) {
+            log.warn("Refresh token failed: user not found - {}", userContext.getUserId());
+            throw new UserException(ErrorCode.USER_NOT_FOUND);
+        }
+
+        // Generate new tokens
+        TokenResponse tokens = generateTokens(user);
+
+        log.info("Token refreshed successfully for user: {}", user.getId());
+
+        return tokens;
     }
 
     /**
