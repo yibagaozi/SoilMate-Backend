@@ -1,5 +1,6 @@
 package com.soilmate.webservice.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -17,11 +18,13 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("user_plant")
 public class UserPlant {
 
     /**
      * The unique identifier for this user plant record.
      */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
     /**
@@ -93,10 +96,12 @@ public class UserPlant {
     /**
      * The timestamp when this user plant record was created.
      */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
     /**
      * The timestamp when this user plant record was last updated.
      */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 }
