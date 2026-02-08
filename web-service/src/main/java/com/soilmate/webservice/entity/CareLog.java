@@ -1,5 +1,6 @@
 package com.soilmate.webservice.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.soilmate.common.enums.CareType;
 import lombok.*;
 
@@ -15,50 +16,26 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("care_log")
 public class CareLog {
 
-    /**
-     * The unique identifier for this care log entry.
-     */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * The ID of the user plant this log entry is for.
-     */
     private Long userPlantId;
 
-    /**
-     * The type of care activity that was performed.
-     */
     private CareType careType;
 
-    /**
-     * The timestamp when the care activity was performed.
-     */
     private LocalDateTime performedAt;
 
-    /**
-     * The actual amount of water given in milliliters.
-     */
     private Integer waterAmountMl;
 
-    /**
-     * The type of fertilizer that was used.
-     */
     private String feedingType;
 
-    /**
-     * Optional notes about this care activity.
-     */
     private String notes;
 
-    /**
-     * The URL of a photo taken during this care activity.
-     */
     private String photoUrl;
 
-    /**
-     * The timestamp when this log entry was created.
-     */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 }
