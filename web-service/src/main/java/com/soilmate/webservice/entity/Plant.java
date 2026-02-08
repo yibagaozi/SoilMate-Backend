@@ -1,69 +1,47 @@
 package com.soilmate.webservice.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import com.soilmate.common.enums.SunlightRequirement;
 import lombok.*;
 
 import java.time.LocalDateTime;
 
+/**
+ * Plant entity - master catalog of plant species.
+ *
+ * @author MA, Ruize
+ * @since 1.0.0
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("plant")
 public class Plant {
 
-    /**
-     * The unique identifier for this plant species.
-     */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * The common name of the plant.
-     */
     private String name;
 
-    /**
-     * The scientific (botanical) name of the plant.
-     */
     private String scientificName;
 
-    /**
-     * The recommended number of days between watering.
-     */
     private Integer wateringIntervalDays;
 
-    /**
-     * The recommended amount of water per watering session in milliliters.
-     */
     private Integer wateringAmountMl;
 
-    /**
-     * The recommended number of days between fertilizer applications.
-     */
     private Integer feedingIntervalDays;
 
-    /**
-     * The recommended type of fertilizer for this plant.
-     */
     private String feedingType;
 
-    /**
-     * The light requirement level for optimal plant growth.
-     */
     private SunlightRequirement sunlightRequirement;
 
-    /**
-     * The URL of the default image for this plant species.
-     */
     private String imageUrl;
 
-    /**
-     * The timestamp when this plant record was created.
-     */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    /**
-     * The timestamp when this plant record was last updated.
-     */
+    @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 
 }

@@ -24,6 +24,8 @@ public class CareLog {
 
     private Long userPlantId;
 
+    private Long careTaskId;
+
     private CareType careType;
 
     private LocalDateTime performedAt;

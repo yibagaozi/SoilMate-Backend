@@ -13,5 +13,7 @@ public class CompleteTaskRequest {
 
     private Integer waterAmountMl;
 
+    private String feedingType;
+
     private String notes;
 }

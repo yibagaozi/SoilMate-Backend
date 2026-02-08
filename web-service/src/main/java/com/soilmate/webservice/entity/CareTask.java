@@ -31,8 +31,6 @@ public class CareTask {
 
     private LocalDate scheduledDate;
 
-    private LocalTime scheduledTime;
-
     private Integer waterAmountMl;
 
     private String feedingType;
@@ -42,7 +40,7 @@ public class CareTask {
 
     private LocalDateTime completedAt;
 
-    private String calendarEventId;
+    private String skipReason;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;

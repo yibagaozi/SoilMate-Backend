@@ -21,87 +21,39 @@ import java.time.LocalDateTime;
 @TableName("user_plant")
 public class UserPlant {
 
-    /**
-     * The unique identifier for this user plant record.
-     */
     @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * The ID of the user who owns this plant.
-     */
     private Long userId;
 
-    /**
-     * The ID of the plant species type.
-     */
     private Long plantId;
 
-    /**
-     * The user's custom nickname for this plant.
-     */
     private String nickname;
 
-    /**
-     * The location where this plant is placed.
-     */
     private String location;
 
-    /**
-     * The URL of the user's photo of this plant.
-     */
     private String photoUrl;
 
-    /**
-     * The date when this plant was added to the user's garden.
-     */
-    private LocalDate createDate;
-
-    /**
-     * The timestamp of the last watering activity for this plant.
-     */
-    private LocalDateTime lastWateredAt;
-
-    /**
-     * The timestamp of the last feeding (fertilizing) activity for this plant.
-     */
-    private LocalDateTime lastFedAt;
-
-    /**
-     * User notes about this plant.
-     */
     private String notes;
 
-    /**
-     * Whether this plant is currently active in the user's garden.
-     */
     @Builder.Default
     private Boolean isActive = true;
 
-    /**
-     * Custom watering interval in days, overriding the plant species default.
-     */
+    private LocalDateTime lastWateredAt;
+
+    private LocalDateTime lastFedAt;
+
     private Integer customWateringIntervalDays;
 
-    /**
-     * Custom watering amount in milliliters, overriding the plant species default.
-     */
     private Integer customWateringAmountMl;
 
-    /**
-     * Custom feeding interval in days, overriding the plant species default.
-     */
     private Integer customFeedingIntervalDays;
 
-    /**
-     * The timestamp when this user plant record was created.
-     */
+    private String customFeedingType;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 
-    /**
-     * The timestamp when this user plant record was last updated.
-     */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private LocalDateTime updatedAt;
 }
