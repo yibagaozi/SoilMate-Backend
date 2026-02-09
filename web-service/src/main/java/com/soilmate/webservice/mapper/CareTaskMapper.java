@@ -6,37 +6,27 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Mapper
 public interface CareTaskMapper extends BaseMapper<CareTask> {
 
-    /**
-     * Check if a pending task exists for user plant and care type.
-     */
-    @Select("SELECT COUNT(*) > 0 FROM care_task WHERE user_plant_id = #{userPlantId} AND care_type = #{careType} AND status = 'PENDING'")
-    boolean existsPendingTask(@Param("userPlantId") Long userPlantId, @Param("careType") String careType);
-
-    /**
-     * Get tasks for multiple user plants within date range.
-     */
     @Select("<script>" +
             "SELECT * FROM care_task WHERE user_plant_id IN " +
-            "<foreach item='id' collection='userPlantIds' open='(' separator=',' close=')'> #{id} </foreach> " +
-            "AND scheduled_date BETWEEN #{startDate} AND #{endDate} ORDER BY scheduled_date, scheduled_time" +
+            "<foreach item='id' collection='userPlantIds' open='(' separator=',' close=')'>#{id}" +
+            "</foreach> " +
+            "AND status = 'PENDING' ORDER BY scheduled_date ASC" +
             "</script>")
-    List<CareTask> selectByUserPlantIdsAndDateRange(@Param("userPlantIds") List<Long> userPlantIds,
-                                                    @Param("startDate") LocalDate startDate,
-                                                    @Param("endDate") LocalDate endDate);
+    List<CareTask> selectPendingTasksByUserPlantIds(@Param("userPlantIds") List<Long> userPlantIds);
 
-    /**
-     * Get pending tasks count by status for date range.
-     */
-    @Select("SELECT COUNT(*) FROM care_task " +
-            "WHERE user_plant_id IN (SELECT id FROM user_plant WHERE user_id = #{userId} AND is_active = 1) " +
-            "AND status = #{status} AND scheduled_date BETWEEN #{startDate} AND #{endDate}")
-    int countByUserIdAndStatusAndDateRange(@Param("userId") Long userId, @Param("status") String status,
-                                           @Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+    @Select("SELECT EXISTS(SELECT 1 FROM care_task WHERE user_plant_id = #{userPlantId} AND care_type = #{careType} " +
+            "AND status = 'PENDING')")
+    boolean existsPendingTask(@Param("userPlantId") Long userPlantId,
+                              @Param("careType") String careType);
+
+    @Select("SELECT * FROM care_task WHERE user_plant_id = #{userPlantId} AND care_type = #{careType} " +
+            "AND status = 'PENDING' ORDER BY scheduled_date ASC LIMIT 1")
+    CareTask selectNextPendingTask(@Param("userPlantId") Long userPlantId,
+                                         @Param("careType") String careType);
 
 }
