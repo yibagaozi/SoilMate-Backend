@@ -29,5 +29,6 @@ public class UpdateUserPlantRequest {
     private Integer wateringIntervalDays;
     private Integer wateringAmountMl;
     private Integer feedingIntervalDays;
+    private String feedingType;
 
 }

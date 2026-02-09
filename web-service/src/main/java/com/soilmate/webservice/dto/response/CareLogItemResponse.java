@@ -15,12 +15,26 @@ import java.util.List;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class CareLogListResponse {
+public class CareLogItemResponse {
 
-    private LocalDate queryDate;
+    private Long id;
 
-    private List<CareLog> logs;
+    private Long taskId;
 
-    private Integer totalCount;
+    private CareType careType;
+
+    private LocalDateTime performedAt;
+
+    private Integer waterAmountMl;
+
+    private String feedingType;
+
+    private String notes;
+
+    private Long userPlantId;
+
+    private String plantNickname;
+
+    private String plantImageUrl;
 
 }

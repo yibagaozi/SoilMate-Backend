@@ -58,6 +58,6 @@ public class UserPlantDetailResponse {
 
     private LocalDate nextFeedingDate;
 
-    private List<CareLog> recentCareLogs;
+    private List<CareLogItemResponse> recentCareLogs;
 
 }
