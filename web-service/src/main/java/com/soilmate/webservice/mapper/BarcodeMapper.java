@@ -15,6 +15,6 @@ import org.apache.ibatis.annotations.Select;
 @Mapper
 public interface BarcodeMapper extends BaseMapper<Barcode> {
 
-    @Select("SELECT plant_id FROM barcode WHERE barcode_value = #{barcodeValue}")
-    Long selectPlantIdByBarcodeValue(@Param("barcodeValue") String barcodeValue);
+    @Select("SELECT * FROM barcode WHERE barcode_value = #{barcodeValue}")
+    Barcode selectByBarcodeValue(@Param("barcodeValue") String barcodeValue);
 }
