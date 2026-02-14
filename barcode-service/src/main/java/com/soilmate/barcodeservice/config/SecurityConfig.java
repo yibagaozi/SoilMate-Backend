@@ -1,4 +1,4 @@
-package com.soilmate.webservice.config;
+package com.soilmate.barcodeservice.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
