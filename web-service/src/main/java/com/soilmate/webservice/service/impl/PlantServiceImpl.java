@@ -55,6 +55,7 @@ public class PlantServiceImpl implements PlantService {
                 .feedingType(plant.getFeedingType())
                 .sunlightRequirement(plant.getSunlightRequirement())
                 .imageUrl(plant.getImageUrl())
+                .note(plant.getNote())
                 .build();
     }
 }

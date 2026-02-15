@@ -38,6 +38,8 @@ public class Plant {
 
     private String imageUrl;
 
+    private String note;
+
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 

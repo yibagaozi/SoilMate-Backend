@@ -29,4 +29,6 @@ public class PlantResponse {
     private SunlightRequirement sunlightRequirement;
 
     private String imageUrl;
+
+    private String note;
 }
