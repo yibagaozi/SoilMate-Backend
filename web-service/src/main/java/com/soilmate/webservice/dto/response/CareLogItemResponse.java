@@ -37,4 +37,8 @@ public class CareLogItemResponse {
 
     private String plantImageUrl;
 
+    private String plantLocation;
+
+    private String photoUrl;
+
 }

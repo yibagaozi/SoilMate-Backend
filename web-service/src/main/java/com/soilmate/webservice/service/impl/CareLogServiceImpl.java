@@ -121,8 +121,6 @@ public class CareLogServiceImpl implements CareLogService {
 
         // Build response
         Plant plant = plantMapper.selectById(userPlant.getPlantId());
-        String imageUrl = userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
-                (plant != null ? plant.getImageUrl() : null);
 
         return CareLogItemResponse.builder()
                 .id(careLog.getId())
@@ -134,7 +132,9 @@ public class CareLogServiceImpl implements CareLogService {
                 .notes(careLog.getNotes())
                 .userPlantId(userPlant.getId())
                 .plantNickname(userPlant.getNickname())
-                .plantImageUrl(imageUrl)
+                .plantImageUrl(userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() : (plant != null ? plant.getImageUrl() : null))
+                .plantLocation(userPlant.getLocation())
+                .photoUrl(careLog.getPhotoUrl())
                 .build();
     }
 
@@ -166,14 +166,6 @@ public class CareLogServiceImpl implements CareLogService {
             UserPlant userPlant = userPlantMap.get(log.getUserPlantId());
             Plant plant = userPlant != null ? plantMap.get(userPlant.getPlantId()) : null;
 
-            String imageUrl = null;
-            String nickname = null;
-            if (userPlant != null) {
-                nickname = userPlant.getNickname();
-                imageUrl = userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
-                        (plant != null ? plant.getImageUrl() : null);
-            }
-
             return CareLogItemResponse.builder()
                     .id(log.getId())
                     .careType(log.getCareType())
@@ -182,8 +174,11 @@ public class CareLogServiceImpl implements CareLogService {
                     .feedingType(log.getFeedingType())
                     .notes(log.getNotes())
                     .userPlantId(log.getUserPlantId())
-                    .plantNickname(nickname)
-                    .plantImageUrl(imageUrl)
+                    .plantNickname(userPlant != null ? userPlant.getNickname() : null)
+                    .plantImageUrl(userPlant != null ? (userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
+                        (plant != null ? plant.getImageUrl() : null)) : null)
+                    .plantLocation(userPlant != null ? userPlant.getLocation() : null)
+                    .photoUrl(log.getPhotoUrl())
                     .build();
         }).toList();
     }

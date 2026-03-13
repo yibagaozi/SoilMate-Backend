@@ -226,7 +226,11 @@ public class UserPlantServiceImpl implements UserPlantService {
         for (Map.Entry<Long, Map<String, Object>> entry : rawResult.entrySet()) {
             Object dateObj = entry.getValue().get("scheduledDate");
             if (dateObj != null) {
-                result.put(entry.getKey(), (LocalDate) dateObj);
+                if (dateObj instanceof java.sql.Date) {
+                    result.put(entry.getKey(), ((java.sql.Date) dateObj).toLocalDate());
+                } else {
+                    result.put(entry.getKey(), (LocalDate) dateObj);
+                }
             }
         }
         return result;

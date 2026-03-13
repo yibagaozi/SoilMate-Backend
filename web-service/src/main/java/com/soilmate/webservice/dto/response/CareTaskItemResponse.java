@@ -34,4 +34,6 @@ public class CareTaskItemResponse {
 
     private String plantImageUrl;
 
+    private String plantLocation;
+
 }

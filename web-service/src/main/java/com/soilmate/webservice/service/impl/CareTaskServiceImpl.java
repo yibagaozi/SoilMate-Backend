@@ -260,14 +260,6 @@ public class CareTaskServiceImpl implements CareTaskService {
             int daysUntil = (int) ChronoUnit.DAYS.between(today, task.getScheduledDate());
             String status = daysUntil < 0 ? "OVERDUE" : "PENDING";
 
-            String imageUrl = null;
-            String nickname = null;
-            if (userPlant != null) {
-                nickname = userPlant.getNickname();
-                imageUrl = userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
-                        (plant != null ? plant.getImageUrl() : null);
-            }
-
             return CareTaskItemResponse.builder()
                     .id(task.getId())
                     .careType(task.getCareType())
@@ -277,8 +269,10 @@ public class CareTaskServiceImpl implements CareTaskService {
                     .waterAmountMl(task.getWaterAmountMl())
                     .feedingType(task.getFeedingType())
                     .userPlantId(task.getUserPlantId())
-                    .plantNickname(nickname)
-                    .plantImageUrl(imageUrl)
+                    .plantNickname(userPlant != null ? userPlant.getNickname() : null)
+                    .plantImageUrl(userPlant != null ? (userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
+                        (plant != null ? plant.getImageUrl() : null)) : null)
+                    .plantLocation(userPlant != null ? userPlant.getLocation() : null)
                     .build();
         }).toList();
     }
