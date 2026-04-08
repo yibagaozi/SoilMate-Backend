@@ -1,6 +1,8 @@
 package com.soilmate.webservice.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.soilmate.common.enums.GrowingEnvironment;
+import com.soilmate.common.enums.PotSize;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -50,6 +52,10 @@ public class UserPlant {
     private Integer customFeedingIntervalDays;
 
     private String customFeedingType;
+
+    private PotSize potSize;
+
+    private GrowingEnvironment environment;
 
     @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;

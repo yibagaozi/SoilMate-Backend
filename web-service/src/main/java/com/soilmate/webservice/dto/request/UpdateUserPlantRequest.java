@@ -1,5 +1,7 @@
 package com.soilmate.webservice.dto.request;
 
+import com.soilmate.common.enums.GrowingEnvironment;
+import com.soilmate.common.enums.PotSize;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -30,5 +32,8 @@ public class UpdateUserPlantRequest {
     private Integer wateringAmountMl;
     private Integer feedingIntervalDays;
     private String feedingType;
+
+    private PotSize potSize;
+    private GrowingEnvironment environment;
 
 }

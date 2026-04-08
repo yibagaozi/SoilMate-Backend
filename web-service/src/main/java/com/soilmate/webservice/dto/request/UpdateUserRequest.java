@@ -1,5 +1,6 @@
 package com.soilmate.webservice.dto.request;
 
+import com.soilmate.common.enums.Region;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,4 +30,6 @@ public class UpdateUserRequest {
     private Boolean notificationEnabled;
 
     private LocalTime reminderTime;
+
+    private Region region;
 }

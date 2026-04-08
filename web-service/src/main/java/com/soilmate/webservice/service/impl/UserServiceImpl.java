@@ -75,6 +75,9 @@ public class UserServiceImpl implements UserService {
         if (request.getReminderTime() != null) {
             user.setReminderTime(request.getReminderTime());
         }
+        if (request.getRegion() != null) {
+            user.setRegion(request.getRegion());
+        }
 
         user.setUpdatedAt(LocalDateTime.now());
         userMapper.updateById(user);

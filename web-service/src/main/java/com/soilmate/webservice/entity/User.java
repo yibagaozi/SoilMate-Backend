@@ -1,6 +1,7 @@
 package com.soilmate.webservice.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import com.soilmate.common.enums.Region;
 import com.soilmate.common.enums.UserRole;
 import lombok.*;
 
@@ -62,6 +63,9 @@ public class User {
 
     @Builder.Default
     private UserRole role = UserRole.USER;
+
+    @Builder.Default
+    private Region region = Region.BEIJING;
 
     /**
      * The timestamp when this user account was created.

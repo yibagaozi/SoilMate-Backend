@@ -1,6 +1,7 @@
 package com.soilmate.webservice.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.soilmate.common.enums.Region;
 import com.soilmate.webservice.entity.User;
 import com.soilmate.webservice.entity.UserAuth;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class UserProfileResponse {
     private LocalDateTime updatedAt;
     private List<AuthMethodResponse> authMethods;
     private UserStatsResponse stats;
+    private Region region;
 
     /**
      * Convert UserEntity to UserProfileResponse with auth methods and stats.
@@ -63,6 +65,7 @@ public class UserProfileResponse {
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
                 .authMethods(authMethods)
+                .region(entity.getRegion())
                 .stats(UserStatsResponse.builder()
                         .totalPlants(totalPlants)
                         .activePlants(activePlants)
@@ -84,6 +87,7 @@ public class UserProfileResponse {
                 .reminderTime(entity.getReminderTime())
                 .createdAt(entity.getCreatedAt())
                 .updatedAt(entity.getUpdatedAt())
+                .region(entity.getRegion())
                 .build();
     }
 

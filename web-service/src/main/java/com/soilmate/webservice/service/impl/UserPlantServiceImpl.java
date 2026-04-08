@@ -73,6 +73,8 @@ public class UserPlantServiceImpl implements UserPlantService {
                 .customFeedingIntervalDays(feedingInterval)
                 .customFeedingType(feedingType)
                 .isActive(true)
+                .potSize(request.getPotSize())
+                .environment(request.getEnvironment())
                 .build();
 
         userPlantMapper.insert(userPlant);
@@ -110,6 +112,12 @@ public class UserPlantServiceImpl implements UserPlantService {
         }
         if (request.getFeedingType() != null) {
             userPlant.setCustomFeedingType(request.getFeedingType());
+        }
+        if (request.getPotSize() != null) {
+            userPlant.setPotSize(request.getPotSize());
+        }
+        if (request.getEnvironment() != null) {
+            userPlant.setEnvironment(request.getEnvironment());
         }
 
         userPlantMapper.updateById(userPlant);
@@ -196,6 +204,8 @@ public class UserPlantServiceImpl implements UserPlantService {
                 .nickname(userPlant.getNickname())
                 .location(userPlant.getLocation())
                 .photoUrl(userPlant.getPhotoUrl())
+                .potSize(userPlant.getPotSize())
+                .environment(userPlant.getEnvironment())
                 .notes(userPlant.getNotes())
                 .lastWateredAt(userPlant.getLastWateredAt())
                 .lastFedAt(userPlant.getLastFedAt())

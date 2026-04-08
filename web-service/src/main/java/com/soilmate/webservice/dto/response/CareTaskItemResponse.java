@@ -1,6 +1,8 @@
 package com.soilmate.webservice.dto.response;
 
 import com.soilmate.common.enums.CareType;
+import com.soilmate.common.enums.GrowingEnvironment;
+import com.soilmate.common.enums.PotSize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -35,5 +37,9 @@ public class CareTaskItemResponse {
     private String plantImageUrl;
 
     private String plantLocation;
+
+    private PotSize potSize;
+
+    private GrowingEnvironment environment;
 
 }

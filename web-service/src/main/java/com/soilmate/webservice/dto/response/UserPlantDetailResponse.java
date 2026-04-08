@@ -2,6 +2,8 @@ package com.soilmate.webservice.dto.response;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.soilmate.common.enums.CareType;
+import com.soilmate.common.enums.GrowingEnvironment;
+import com.soilmate.common.enums.PotSize;
 import com.soilmate.common.enums.SunlightRequirement;
 import com.soilmate.webservice.entity.CareLog;
 import lombok.AllArgsConstructor;
@@ -59,5 +61,9 @@ public class UserPlantDetailResponse {
     private LocalDate nextFeedingDate;
 
     private List<CareLogItemResponse> recentCareLogs;
+
+    private PotSize potSize;
+
+    private GrowingEnvironment environment;
 
 }
