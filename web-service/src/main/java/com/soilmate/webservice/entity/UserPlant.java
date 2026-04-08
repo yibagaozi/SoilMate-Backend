@@ -38,8 +38,8 @@ public class UserPlant {
 
     private String notes;
 
-    @Builder.Default
-    private Boolean isActive = true;
+    @TableField("is_active")
+private Boolean active = true;
 
     private LocalDateTime lastWateredAt;
 

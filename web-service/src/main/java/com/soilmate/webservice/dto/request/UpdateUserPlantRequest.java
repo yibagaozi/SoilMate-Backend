@@ -36,4 +36,6 @@ public class UpdateUserPlantRequest {
     private PotSize potSize;
     private GrowingEnvironment environment;
 
+    private Boolean active;
+
 }

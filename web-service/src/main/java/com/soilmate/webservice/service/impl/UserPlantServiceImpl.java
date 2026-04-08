@@ -72,7 +72,7 @@ public class UserPlantServiceImpl implements UserPlantService {
                 .customWateringAmountMl(wateringAmount)
                 .customFeedingIntervalDays(feedingInterval)
                 .customFeedingType(feedingType)
-                .isActive(true)
+                .active(true)
                 .potSize(request.getPotSize())
                 .environment(request.getEnvironment())
                 .build();
@@ -119,6 +119,9 @@ public class UserPlantServiceImpl implements UserPlantService {
         if (request.getEnvironment() != null) {
             userPlant.setEnvironment(request.getEnvironment());
         }
+        if (request.getActive() != null) {
+            userPlant.setActive(request.getActive());
+        }
 
         userPlantMapper.updateById(userPlant);
     }
@@ -127,7 +130,7 @@ public class UserPlantServiceImpl implements UserPlantService {
     public List<UserPlantDetailResponse> getUserPlants(Long userId) {
         LambdaQueryWrapper<UserPlant> wrapper = new LambdaQueryWrapper<>();
         wrapper.eq(UserPlant::getUserId, userId)
-                .eq(UserPlant::getIsActive, true)
+                .eq(UserPlant::getActive, true)
                 .orderByDesc(UserPlant::getCreatedAt);
 
         List<UserPlant> userPlants = userPlantMapper.selectList(wrapper);
@@ -177,7 +180,7 @@ public class UserPlantServiceImpl implements UserPlantService {
         UserPlant userPlant = getUserPlantOrThrow(userId, userPlantId);
 
         // Soft delete
-        userPlant.setIsActive(false);
+        userPlant.setActive(false);
         userPlantMapper.updateById(userPlant);
 
         // Delete related tasks and logs
@@ -187,7 +190,7 @@ public class UserPlantServiceImpl implements UserPlantService {
 
     private UserPlant getUserPlantOrThrow(Long userId, Long userPlantId) {
         UserPlant userPlant = userPlantMapper.selectById(userPlantId);
-        if (userPlant == null || !userPlant.getUserId().equals(userId) || !userPlant.getIsActive()) {
+        if (userPlant == null || !userPlant.getUserId().equals(userId) || !userPlant.getActive()) {
             throw new ResourceNotFoundException(ErrorCode.USER_PLANT_NOT_FOUND);
         }
         return userPlant;

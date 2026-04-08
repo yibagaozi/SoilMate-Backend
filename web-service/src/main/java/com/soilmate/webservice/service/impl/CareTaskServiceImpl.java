@@ -206,7 +206,7 @@ public class CareTaskServiceImpl implements CareTaskService {
         // Get user's active plants
         LambdaQueryWrapper<UserPlant> plantWrapper = new LambdaQueryWrapper<>();
         plantWrapper.eq(UserPlant::getUserId, userId)
-                .eq(UserPlant::getIsActive, true);
+                .eq(UserPlant::getActive, true);
         List<UserPlant> userPlants = userPlantMapper.selectList(plantWrapper);
 
         if (userPlants.isEmpty()) {

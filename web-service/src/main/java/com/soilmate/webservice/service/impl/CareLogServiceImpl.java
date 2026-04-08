@@ -41,7 +41,7 @@ public class CareLogServiceImpl implements CareLogService {
         // Get user's active plants
         LambdaQueryWrapper<UserPlant> plantWrapper = new LambdaQueryWrapper<>();
         plantWrapper.eq(UserPlant::getUserId, userId)
-                .eq(UserPlant::getIsActive, true);
+                .eq(UserPlant::getActive, true);
 
         if (userPlantId != null) {
             plantWrapper.eq(UserPlant::getId, userPlantId);
@@ -92,7 +92,7 @@ public class CareLogServiceImpl implements CareLogService {
     public CareLogItemResponse addCareLog(Long userId, AddCareLogRequest request) {
         // Verify user plant ownership
         UserPlant userPlant = userPlantMapper.selectById(request.getUserPlantId());
-        if (userPlant == null || !userPlant.getUserId().equals(userId) || !userPlant.getIsActive()) {
+        if (userPlant == null || !userPlant.getUserId().equals(userId) || !userPlant.getActive()) {
             throw new ResourceNotFoundException(ErrorCode.USER_PLANT_NOT_FOUND);
         }
 

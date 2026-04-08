@@ -9,9 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum GrowingEnvironment {
 
-    INDOOR("INDOOR"),
-    OUTDOOR("OUTDOOR"),
-    GREENHOUSE("GREENHOUSE");
+    Indoor("INDOOR"),
+    Outdoor("OUTDOOR"),
+    Greenhouse("GREENHOUSE");
 
     @EnumValue
     private final String code;
@@ -27,5 +27,5 @@ public enum GrowingEnvironment {
         }
         throw new BusinessException(ErrorCode.PARAM_ERROR);
     }
-    
+
 }
