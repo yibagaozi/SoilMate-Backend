@@ -9,9 +9,9 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum GrowingEnvironment {
 
-    Indoor("INDOOR"),
-    Outdoor("OUTDOOR"),
-    Greenhouse("GREENHOUSE");
+    INDOOR("INDOOR"),
+    OUTDOOR("OUTDOOR"),
+    GREENHOUSE("GREENHOUSE");
 
     @EnumValue
     private final String code;
