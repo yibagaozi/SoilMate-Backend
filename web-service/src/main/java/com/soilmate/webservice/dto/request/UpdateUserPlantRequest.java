@@ -38,4 +38,6 @@ public class UpdateUserPlantRequest {
 
     private Boolean active;
 
+    private String imageUrl;
+
 }

@@ -46,7 +46,7 @@ public class UserPlantDetailResponse {
 
     private SunlightRequirement sunlightRequirement;
 
-    private String plantImageUrl;
+    private String imageUrl;
 
     private Integer wateringIntervalDays;
 

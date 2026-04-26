@@ -132,7 +132,7 @@ public class CareLogServiceImpl implements CareLogService {
                 .notes(careLog.getNotes())
                 .userPlantId(userPlant.getId())
                 .plantNickname(userPlant.getNickname())
-                .plantImageUrl(userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() : (plant != null ? plant.getImageUrl() : null))
+                .plantImageUrl(userPlant.getImageUrl() != null ? userPlant.getImageUrl() : (plant != null ? plant.getImageUrl() : null))
                 .plantLocation(userPlant.getLocation())
                 .photoUrl(careLog.getPhotoUrl())
                 .build();
@@ -175,7 +175,7 @@ public class CareLogServiceImpl implements CareLogService {
                     .notes(log.getNotes())
                     .userPlantId(log.getUserPlantId())
                     .plantNickname(userPlant != null ? userPlant.getNickname() : null)
-                    .plantImageUrl(userPlant != null ? (userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
+                    .plantImageUrl(userPlant != null ? (userPlant.getImageUrl() != null ? userPlant.getImageUrl() :
                         (plant != null ? plant.getImageUrl() : null)) : null)
                     .plantLocation(userPlant != null ? userPlant.getLocation() : null)
                     .photoUrl(log.getPhotoUrl())

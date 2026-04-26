@@ -75,6 +75,7 @@ public class UserPlantServiceImpl implements UserPlantService {
                 .active(true)
                 .potSize(request.getPotSize())
                 .environment(request.getEnvironment())
+                .imageUrl(request.getImageUrl())
                 .build();
 
         userPlantMapper.insert(userPlant);
@@ -121,6 +122,9 @@ public class UserPlantServiceImpl implements UserPlantService {
         }
         if (request.getActive() != null) {
             userPlant.setActive(request.getActive());
+        }
+        if (request.getImageUrl() != null) {
+            userPlant.setImageUrl(request.getImageUrl());
         }
 
         userPlantMapper.updateById(userPlant);
@@ -206,7 +210,7 @@ public class UserPlantServiceImpl implements UserPlantService {
                 .id(userPlant.getId())
                 .nickname(userPlant.getNickname())
                 .location(userPlant.getLocation())
-                .photoUrl(userPlant.getPhotoUrl())
+                .photoUrl(userPlant.getImageUrl())
                 .potSize(userPlant.getPotSize())
                 .environment(userPlant.getEnvironment())
                 .notes(userPlant.getNotes())
@@ -217,7 +221,7 @@ public class UserPlantServiceImpl implements UserPlantService {
                 .plantName(plant.getName())
                 .scientificName(plant.getScientificName())
                 .sunlightRequirement(plant.getSunlightRequirement())
-                .plantImageUrl(plant.getImageUrl())
+                .imageUrl(plant.getImageUrl())
                 .wateringIntervalDays(userPlant.getCustomWateringIntervalDays())
                 .wateringAmountMl(userPlant.getCustomWateringAmountMl())
                 .feedingIntervalDays(userPlant.getCustomFeedingIntervalDays())

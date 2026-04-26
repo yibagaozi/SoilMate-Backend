@@ -34,7 +34,7 @@ public class UserPlant {
 
     private String location;
 
-    private String photoUrl;
+    private String imageUrl;
 
     private String notes;
 

@@ -270,7 +270,7 @@ public class CareTaskServiceImpl implements CareTaskService {
                     .feedingType(task.getFeedingType())
                     .userPlantId(task.getUserPlantId())
                     .plantNickname(userPlant != null ? userPlant.getNickname() : null)
-                    .plantImageUrl(userPlant != null ? (userPlant.getPhotoUrl() != null ? userPlant.getPhotoUrl() :
+                    .plantImageUrl(userPlant != null ? (userPlant.getImageUrl() != null ? userPlant.getImageUrl() :
                         (plant != null ? plant.getImageUrl() : null)) : null)
                     .plantLocation(userPlant != null ? userPlant.getLocation() : null)
                     .build();

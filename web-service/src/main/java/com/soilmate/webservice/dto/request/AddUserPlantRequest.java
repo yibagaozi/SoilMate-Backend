@@ -46,4 +46,6 @@ public class AddUserPlantRequest {
     private PotSize potSize;
     private GrowingEnvironment environment;
 
+    private String imageUrl;
+
 }
