@@ -6,6 +6,7 @@ import com.soilmate.common.enums.UserRole;
 import com.soilmate.common.exception.TokenException;
 import com.soilmate.common.security.config.JwtProperties;
 import com.soilmate.common.security.context.UserContext;
+import com.soilmate.common.security.dto.TokenResponse;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SignatureException;
@@ -60,11 +61,11 @@ public class JwtUtil {
     /**
      * Generates both access and refresh tokens.
      */
-    public Map<String, String> generateTokenPair(Long userId, String email, String displayName, UserRole role) {
-        Map<String, String> tokens = new HashMap<>();
-        tokens.put("accessToken", generateAccessToken(userId, email, displayName, role));
-        tokens.put("refreshToken", generateRefreshToken(userId, email, displayName, role));
-        return tokens;
+    public TokenResponse generateTokenPair(Long userId, String email, String displayName, UserRole role) {
+        return TokenResponse.builder().
+                accessToken(generateAccessToken(userId, email, displayName, role)).
+                refreshToken(generateRefreshToken(userId, email, displayName, role)).
+                build();
     }
 
     /**
@@ -170,11 +171,16 @@ public class JwtUtil {
     }
 
     private UserContext buildUserContext(Claims claims) {
-        return UserContext.builder()
-                .userId(claims.get(CLAIM_USER_ID, Long.class))
-                .email(claims.get(CLAIM_EMAIL, String.class))
-                .displayName(claims.get(CLAIM_DISPLAY_NAME, String.class))
-                .role(UserRole.fromCode(claims.get(CLAIM_ROLE, String.class)))
-                .build();
+        try {
+            UserRole role = UserRole.fromCode(claims.get(CLAIM_ROLE, String.class));
+            return UserContext.builder().
+                    userId(claims.get(CLAIM_USER_ID, Long.class)).
+                    email(claims.get(CLAIM_EMAIL, String.class)).
+                    displayName(claims.get(CLAIM_DISPLAY_NAME, String.class)).
+                    role(role).
+                    build();
+        } catch (Exception e) {
+            throw new TokenException(ErrorCode.TOKEN_INVALID, e);
+        }
     }
 }

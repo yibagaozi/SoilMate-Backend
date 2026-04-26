@@ -34,6 +34,9 @@ public enum ErrorCode {
 
     // Resource
     RESOURCE_NOT_FOUND("RESOURCE_001", "Resource not found"),
+    PLANT_NOT_FOUND("RESOURCE_002", "Plant not found"),
+    USER_PLANT_NOT_FOUND("RESOURCE_003", "User plant not found"),
+    BARCODE_NOT_FOUND("RESOURCE_004", "Barcode not found"),
 
     // Barcode
     BARCODE_CONTENT_EMPTY("BARCODE_001", "QR code content cannot be empty"),
@@ -44,7 +47,21 @@ public enum ErrorCode {
     BARCODE_IMAGE_FORMAT_INVALID("BARCODE_006", "Invalid image format"),
     BARCODE_PARSE_FAILED("BARCODE_007", "No QR code detected"),
     BARCODE_BASE64_EMPTY("BARCODE_008", "Base64 string cannot be empty"),
-    BARCODE_BASE64_INVALID("BARCODE_009", "Invalid Base64 encoding");
+    BARCODE_BASE64_INVALID("BARCODE_009", "Invalid Base64 encoding"),
+    BARCODE_FORMAT_INVALID("BARCODE_010", "Invalid barcode format"),
+
+    // User
+    USER_NOT_FOUND("USER_001", "User not found"),
+    USER_EMAIL_EXISTS("USER_002", "Email already registered"),
+    USER_EMAIL_INVALID("USER_003", "Invalid email format"),
+    USER_PASSWORD_WEAK("USER_004", "Password must be at least 8 characters"),
+    USER_DISPLAY_NAME_REQUIRED("USER_005", "Display name is required"),
+    USER_AUTH_NOT_FOUND("USER_006", "Authentication method not found"),
+    USER_ALREADY_LINKED("USER_007", "This authentication method is already linked"),
+
+    // Task
+    TASK_NOT_FOUND("TASK_001", "Task not found"),
+    TASK_ALREADY_PROCESSED("TASK_002", "Task already completed or skipped");
 
     private final String code;
     private final String message;

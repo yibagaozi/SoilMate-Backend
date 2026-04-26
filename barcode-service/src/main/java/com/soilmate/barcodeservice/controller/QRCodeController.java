@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/qrcode")
+@RequestMapping("/qrcode")
 public class QRCodeController {
 
     private final BarcodeGenerator barcodeGenerator;

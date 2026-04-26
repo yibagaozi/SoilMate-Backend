@@ -1,5 +1,6 @@
-package com.soilmate.common.entity;
+package com.soilmate.webservice.entity;
 
+import com.baomidou.mybatisplus.annotation.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
@@ -22,30 +23,18 @@ import java.time.LocalDateTime;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
+@TableName("barcode")
 public class Barcode {
 
-    /**
-     * The unique identifier for this barcode record.
-     */
+    @TableId(type = IdType.AUTO)
     private Long id;
 
-    /**
-     * The encoded barcode string value.
-     */
     private String barcodeValue;
 
-    /**
-     * The ID of the associated plant species.
-     */
     private Long plantId;
 
-    /**
-     * The production batch number for this barcode.
-     */
     private String batchNumber;
 
-    /**
-     * The timestamp when this barcode record was created.
-     */
+    @TableField(fill = FieldFill.INSERT)
     private LocalDateTime createdAt;
 }

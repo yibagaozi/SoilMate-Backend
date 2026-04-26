@@ -1,5 +1,6 @@
 package com.soilmate.common.enums;
 
+import com.baomidou.mybatisplus.annotation.EnumValue;
 import com.soilmate.common.exception.BusinessException;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -18,6 +19,7 @@ public enum TaskStatus {
     COMPLETED("COMPLETED", "Completed", "Task has been completed successfully"),
     SKIPPED("SKIPPED", "Skipped", "Task was skipped without completion");
 
+    @EnumValue
     private final String code;
     private final String label;
     private final String description;
