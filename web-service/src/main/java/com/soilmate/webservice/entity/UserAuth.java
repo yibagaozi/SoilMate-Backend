@@ -51,21 +51,6 @@ public class UserAuth {
     private String passwordHash;
 
     /**
-     * The OAuth access token from the authentication provider.
-     */
-    private String accessToken;
-
-    /**
-     * The OAuth refresh token from the authentication provider.
-     */
-    private String refreshToken;
-
-    /**
-     * The expiration timestamp of the OAuth access token.
-     */
-    private LocalDateTime tokenExpiresAt;
-
-    /**
      * Whether this is the user's primary login method.
      */
     @Builder.Default
