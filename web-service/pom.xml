@@ -96,12 +96,7 @@
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>
-        <dependency>
-            <groupId>com.soilmate</groupId>
-            <artifactId>barcode-service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
+
             <!-- SpringDoc OpenAPI -->
         <dependency>
             <groupId>org.springdoc</groupId>
