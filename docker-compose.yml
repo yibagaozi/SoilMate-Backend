@@ -1,6 +1,11 @@
 services:
   barcode-service:
     image: barcode-service:latest
+    build:
+      context: .
+      dockerfile: barcode-service/Dockerfile
+      platforms:
+        - linux/amd64
     container_name: barcode-service
     ports:
       - "127.0.0.1:8080:8080"
@@ -8,6 +13,11 @@ services:
 
   web-service:
     image: web-service:latest
+    build:
+      context: .
+      dockerfile: web-service/Dockerfile
+      platforms:
+        - linux/amd64
     container_name: web-service
     ports:
       - "127.0.0.1:8081:8081"
